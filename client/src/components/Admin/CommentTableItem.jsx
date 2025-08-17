@@ -18,7 +18,7 @@ const CommentTableItem = ({ comment, fetchCommets }) => {
         {blogDate.toLocaleDateString()}
       </td>
       <td className="px-6 py-4">
-        <div className="inline-flex ">
+        <div className="inline-flex items-center gap-4 ">
           {!comment.isApproved ? (
             <img
               src={assets.tick_icon}
