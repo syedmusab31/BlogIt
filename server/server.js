@@ -11,7 +11,11 @@ const app = express();
 await connectDB();
 
 //middlewares
-app.use(cors());
+app.use(cors({
+    origin: "https://blogit-frontend-chi.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  }));
 app.use(express.json());
 
 
