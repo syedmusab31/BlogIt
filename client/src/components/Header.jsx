@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext";
 
 const Header = () => {
   const { setInput,input } = useAppContext();

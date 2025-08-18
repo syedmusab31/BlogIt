@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { blog_data, blogCategories } from "../assets/assets";
 import { motion } from "motion/react";
 import BlogCard from "./BlogCard";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext";
 const BlogList = () => {
   const [menu, setmenu] = useState("All");
   const {blogs,input } = useAppContext();
