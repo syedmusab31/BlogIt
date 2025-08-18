@@ -1,33 +1,31 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../context/appContext';
+import toast from 'react-hot-toast';
 
 const Login = () => {
+
+  const {axios, setToken} = useAppContext();
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
-  const navigate = useNavigate();
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(email === '' || password === '') {
-      alert('Please fill in all fields');
-      return;
+    try {
+      const { data } = await axios.post('/api/admin/login', { email, password });
+      if (data.success) {
+        setToken(data.token);
+        localStorage.setItem('token', data.token);
+        axios.defaults.headers.common['Authorization'] = data.token;
+      }else{
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
-    if(!email.includes('@')) {
-      alert('Please enter a valid email');
-      return;
-    }
-    if(password.length < 6) {
-      alert('Password must be at least 6 characters long');
-      return;
-    }
-    if(email === 'admin@example.com' && password === 'password') {
-      alert('Login successful');
-      navigate('/admin');
-    } else {
-      alert('Invalid email or password');
-    }
+  };
 
-    // Handle login logic here
-  }
+  
 
   return (
     <div className='flex items-center justify-center h-screen'>
@@ -53,6 +51,7 @@ const Login = () => {
       </div>
     </div>
   )
+
 }
 
 export default Login
