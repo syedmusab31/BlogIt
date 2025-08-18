@@ -2,6 +2,7 @@ import fs from 'fs';
 import Blog from '../models/Blog.js';
 import imageKit from '../configs/imageKit.js';
 import Comment from '../models/Comment.js';
+import main from '../configs/gemini.js';
 
 export const addBlog=async(req,res)=>{
     try {
@@ -12,6 +13,8 @@ export const addBlog=async(req,res)=>{
             return res.json({ success: false, message: "Please fill all fields" });
         }
         const fileBuffer=fs.readFileSync(imageFile.path)
+       
+
         //upload image to imagekit
         const response=await imageKit.upload({
             file: fileBuffer,
@@ -19,6 +22,7 @@ export const addBlog=async(req,res)=>{
             folder:"/blogs"
 
         });
+       
         //optimization through imagekit url transformation
         const optimizedImageUrl = imageKit.url({
             path: response.filePath, // Fixed typo here
@@ -68,7 +72,7 @@ export const getBlogById=async(req,res)=>{
 
 export const deleteBlogById=async(req,res)=>{
     try {
-        const { id } = req.params;
+        const { id } = req.body;
         await Blog.findByIdAndDelete(id);
         //Delete all comments associated with this blog
         await Comment.deleteMany({ blog: id });
@@ -96,7 +100,7 @@ export const togglePublish = async (req, res) => {
 export const addComment=async(req,res)=>{
     try {
         const {blog,name, content } = req.body;
-       await Comment.create({blog,name, content })
+       await Comment.create({blog,name, content ,isApproved:false});
        res.json({ success: true, message: "Comment added for review" });
     } catch (error) {
         res.json({ success: false, message: error.message });
@@ -108,6 +112,16 @@ export const getBlogComments=async(req,res)=>{
         const { blogId } = req.body;
         const comments = await Comment.find({ blog: blogId, isApproved:true }).sort({ createdAt: -1 });
         res.json({ success: true, comments });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
+
+export const generateContent = async (req, res) => {
+    try {
+        const {prompt} = req.body;
+        const content = await main(prompt + 'Generate a blog content for this topic in simple text format');
+        res.json({ success: true, content });
     } catch (error) {
         res.json({ success: false, message: error.message });
     }
