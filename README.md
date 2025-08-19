@@ -68,7 +68,7 @@ BlogIt is a modern, feature-rich blogging platform designed to make content crea
 ### Steps:
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/BlogIt.git
+   git clone https://github.com/syedmusab31/BlogIt
    cd BlogIt
    ```
 2. Install dependencies:
@@ -76,8 +76,9 @@ BlogIt is a modern, feature-rich blogging platform designed to make content crea
    npm install
    ```
 3. Set up environment variables:
-   - Create a `.env` file in the `/server` directory.
-   - Add your MongoDB URI and ImageKit credentials.
+   - Create a `.env` file in the `/server` and `/client` directory.
+   - In `/server` add variables : PORT,MONGODB_URI,ADMIN_EMAIL,ADMIN_PASSWORD,FRONTEND_URL,JWT_SECRET,IMAGEKIT_PUBLIC_KEY,IMAGEKIT_PRIVATE_KEY,IMAGEKIT_URL_ENDPOINT,GEMINI_API_KEY
+   - In `/client` add variable : VITE_BASE_URL 
 4. Run the application:
    ```bash
    npm run dev
