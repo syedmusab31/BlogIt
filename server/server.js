@@ -14,11 +14,17 @@ const app = express();
 await connectDB();
 
 //middlewares
-app.use(cors({
-    origin: [process.env.FRONTEND_URL,'https://blogit-dev.vercel.app/'],
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://blogit-dev.vercel.app" // ✅ no trailing slash
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-  }));
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 
