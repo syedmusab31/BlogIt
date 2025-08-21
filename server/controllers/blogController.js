@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Blog from '../models/Blog.js';
-import imageKit from '../configs/imageKit.js';
+import imageKit from '../configs/imagekit.js';
 import Comment from '../models/Comment.js';
 import main from '../configs/gemini.js';
 
